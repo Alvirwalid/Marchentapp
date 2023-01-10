@@ -2,18 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:marchentapp/constss/consts.dart';
+import 'package:marchentapp/model/productmodel.dart';
+import 'package:marchentapp/provider/productprovider.dart';
 import 'package:marchentapp/widgets/textwidget.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/cardwidget.dart';
 import '../widgets/topsaleproduct.dart';
 import '../constss/flchart.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<ProductModel> productList = [];
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
+    var productprovider =
+        Provider.of<ProductProvider>(context).getProductData();
+
+    productList = Provider.of<ProductProvider>(context).productList;
     return Scaffold(
       backgroundColor: Color(0xffFFFFFF),
       appBar: AppBar(
@@ -52,6 +68,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
                 shrinkWrap: true,
+                physics: ScrollPhysics(),
                 crossAxisCount: 2,
                 children: [
                   CardWidget(
@@ -132,14 +149,36 @@ class HomeScreen extends StatelessWidget {
               ),
 
               GridView.builder(
-                itemCount: Constss.topSaleProduct.length,
+                physics: ScrollPhysics(),
+                itemCount: productList.length,
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 15, crossAxisCount: 2),
                 itemBuilder: (context, index) {
-                  return TopSaleCard(
-                    index: index,
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              opacity: 0.9,
+                              image:
+                                  NetworkImage("${productList[index].image}"))),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Textwidget(
+                          text: "BDT ${productList[index].price}",
+                          color: Colors.black,
+                          fs: 16,
+                          istitle: true,
+                        ),
+                      ),
+                    ),
                   );
+                  ;
                 },
               )
             ],

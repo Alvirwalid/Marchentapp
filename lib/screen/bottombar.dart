@@ -16,7 +16,7 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int selectesindex = 1;
+  int selectesindex = 0;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'HomeScreen'},
     {'page': const OrdersScreen(), 'title': 'OrdersScreen'},
