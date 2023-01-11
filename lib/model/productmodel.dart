@@ -1,4 +1,6 @@
-class ProductModel {
+import 'package:flutter/cupertino.dart';
+
+class ProductModel with ChangeNotifier {
   String? sId;
   String? name;
   String? image;

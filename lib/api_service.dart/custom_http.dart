@@ -23,7 +23,7 @@ class CustomeHttp {
       var respons =
           await http.get(Uri.parse(link), headers: await getheaderWithToken());
 
-      print('respons isss ${respons.body}');
+      // print('respons isss ${respons.body}');
 
       var data = jsonDecode(respons.body);
 
@@ -35,7 +35,7 @@ class CustomeHttp {
         productList.add(productModel);
       }
 
-      print("${productList[0].price}");
+      // print("${productList[0].price}");
 
       return productList;
     } catch (e) {

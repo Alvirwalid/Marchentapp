@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Textwidget extends StatelessWidget {
   Textwidget(
@@ -18,10 +19,10 @@ class Textwidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: GoogleFonts.quicksand(
           color: color,
           fontSize: fs,
-          fontWeight: istitle == false ? FontWeight.normal : FontWeight.bold),
+          fontWeight: istitle == false ? FontWeight.w600 : FontWeight.bold),
     );
   }
 }

@@ -33,25 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color(0xffFFFFFF),
       appBar: AppBar(
-        leadingWidth: 130,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-              Textwidget(
-                text: 'Home',
-                color: Colors.black,
-                istitle: true,
-                fs: 24,
-              )
-            ],
-          ),
+        title: Row(
+          children: [
+            const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+            Textwidget(
+              text: 'Home',
+              color: Colors.black,
+              istitle: true,
+              fs: 22,
+            )
+          ],
         ),
       ),
       body: Container(
@@ -152,14 +148,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: ScrollPhysics(),
                 itemCount: productList.length,
                 shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 15, crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   return Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(

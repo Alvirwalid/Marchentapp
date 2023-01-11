@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
           create: (context) => ProductProvider(),
         )
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const BottomBar(),
+        home: BottomBar(),
       ),
     );
   }
