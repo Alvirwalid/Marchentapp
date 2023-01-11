@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:marchentapp/innerscreen/addproduct.dart';
 import 'package:marchentapp/provider/productprovider.dart';
 import 'package:marchentapp/screen/bottombar.dart';
 import 'package:marchentapp/screen/homepsge.dart';
@@ -21,9 +23,12 @@ class MyApp extends StatelessWidget {
           create: (context) => ProductProvider(),
         )
       ],
-      child: const MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: BottomBar(),
+        getPages: [
+          GetPage(name: AddProduct.routename, page: () => AddProduct())
+        ],
       ),
     );
   }

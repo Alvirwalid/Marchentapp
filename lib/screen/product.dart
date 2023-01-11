@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:marchentapp/innerscreen/addproduct.dart';
 import 'package:provider/provider.dart';
 
 import '../model/productmodel.dart';
@@ -112,7 +114,9 @@ class ProductScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12)),
                       minimumSize: Size(size.width, 50),
                       backgroundColor: const Color.fromARGB(255, 236, 176, 47)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AddProduct.routename);
+                  },
                   child: Textwidget(
                     text: 'Add Product',
                     color: Colors.black,
