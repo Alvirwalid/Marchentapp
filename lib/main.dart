@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marchentapp/innerscreen/addproduct.dart';
@@ -6,7 +7,16 @@ import 'package:marchentapp/screen/bottombar.dart';
 import 'package:marchentapp/screen/homepsge.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: 'AIzaSyBCBS8cUvNI8muoR2yCWAErDCsxCFmEW2Q',
+          appId: '1:875322725404:android:fe9f221b1a1dea572bfbd9',
+          messagingSenderId: '875322725404',
+          projectId: 'marchentapp-91955',
+          authDomain: 'marchentapp-91955.firebaseapp.com'));
   runApp(const MyApp());
 }
 

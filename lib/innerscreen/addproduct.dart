@@ -1,4 +1,7 @@
 import 'dart:io' as io;
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -7,6 +10,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 import '../widgets/textwidget.dart';
 
@@ -45,6 +49,47 @@ class _AddProductState extends State<AddProduct> {
     } catch (e) {
       print("error while picking file.");
     }
+  }
+
+  ///firebase
+
+  List<String> _imagesUrl = [];
+
+  Future<void> uploadImages() async {
+    final uuid = Uuid().v4();
+    int i = 0;
+    for (XFile imageFile in imagefiles!) {
+      try {
+        var ref = FirebaseStorage.instance
+            .ref()
+            .child('ProductImages')
+            .child(Uuid().v4())
+            .child(i.toString() + '.jpg');
+
+        await ref.putFile(File(imageFile.path));
+
+        var url = await ref.getDownloadURL();
+
+        _imagesUrl.add(url);
+        setState(() {});
+
+        ++i;
+      } catch (err) {
+        print(err);
+      }
+    }
+    setState(() {});
+
+    await FirebaseFirestore.instance.collection('product').doc(uuid).set({
+      'id': uuid,
+      'name': _productname.text.toString(),
+      'productcategory': _productcategory.text.toString(),
+      'price': _price.text.toString(),
+      'discount': _discount.text.toString(),
+      'unit': _unit.toString(),
+      'image': _imagesUrl
+    });
+    print(_imagesUrl);
   }
 
   // @override
@@ -106,7 +151,9 @@ class _AddProductState extends State<AddProduct> {
       ),
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
         child: Form(
           key: _formkey,
           child: SingleChildScrollView(
@@ -319,7 +366,9 @@ class _AddProductState extends State<AddProduct> {
                         minimumSize: Size(size.width, 50),
                         backgroundColor:
                             const Color.fromARGB(255, 236, 176, 47)),
-                    onPressed: () {},
+                    onPressed: () {
+                      uploadImages();
+                    },
                     child: Textwidget(
                       text: 'Add Product',
                       color: Colors.black,

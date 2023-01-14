@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "875322725404",
+    "project_id": "marchentapp-91955",
+    "storage_bucket": "marchentapp-91955.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875322725404:android:fe9f221b1a1dea572bfbd9",
+        "android_client_info": {
+          "package_name": "com.example.marchentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875322725404-9rij0vg3glj9eadmlnslqcnmsp5hmh14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.marchentapp",
+            "certificate_hash": "a31c909b4c999a8395394e4c0a75a865865e53ef"
+          }
+        },
+        {
+          "client_id": "875322725404-jnhti11lls97fqn2jm6h7tht6an77gi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCBS8cUvNI8muoR2yCWAErDCsxCFmEW2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875322725404-jnhti11lls97fqn2jm6h7tht6an77gi7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
