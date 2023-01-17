@@ -20,7 +20,7 @@ class AvailableProduct extends StatelessWidget {
       height: size.height * 0.15,
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Color(0xffF7F7F7),
+        color: Colors.white,
       ),
       child: Row(
         children: [
@@ -28,20 +28,18 @@ class AvailableProduct extends StatelessWidget {
             flex: 2,
             child: Container(
               width: double.infinity,
-              height: double.infinity,
+              height: 80,
               decoration: BoxDecoration(
-                  color: Color(0xffF5F5F7),
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      fit: BoxFit.fill,
                       image: NetworkImage('${productList.image}'))),
-              child: Text(''),
             ),
           ),
           Expanded(
             flex: 4,
             child: Container(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Textwidget(
@@ -50,12 +48,13 @@ class AvailableProduct extends StatelessWidget {
                     istitle: true,
                     fs: 18,
                   ),
+                  const SizedBox(height: 5),
                   Textwidget(
                     text: "BDT ${productList.price}",
                     color: Colors.black,
                     fs: 12,
                   ),
-                  Spacer(),
+                  const SizedBox(height: 5),
                   Textwidget(
                     text: "In Stock: 45 Pcs",
                     color: Colors.black,

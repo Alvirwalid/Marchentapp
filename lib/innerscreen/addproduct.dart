@@ -24,6 +24,7 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   final _productname = TextEditingController();
+  final _subcatname = TextEditingController();
   final _productcategory = TextEditingController();
   final _price = TextEditingController();
   final _discount = TextEditingController();
@@ -32,6 +33,8 @@ class _AddProductState extends State<AddProduct> {
 
   final ImagePicker imgpicker = ImagePicker();
   List<XFile>? imagefiles;
+
+  bool isProduct = true;
 
   openImages() async {
     try {
@@ -351,7 +354,91 @@ class _AddProductState extends State<AddProduct> {
                 SizedBox(
                   height: size.height * 0.015,
                 ),
+                Textwidget(
+                  text: 'Sub category name',
+                  color: Colors.black,
+                  istitle: true,
+                  fs: 15,
+                ),
+                SizedBox(
+                  height: size.height * 0.01,
+                ),
+                TextFormField(
+                  controller: _subcatname,
+                  key: const ValueKey('sub cat'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter sub category name';
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: inputdecoration,
+                ),
+                SizedBox(
+                  height: size.height * 0.015,
+                ),
+                // Row(
+                //   children: [
+                //     ElevatedButton(
+                //         style: ElevatedButton.styleFrom(
+                //             shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(12)),
+                //             // minimumSize: Size(size.width, 50),
+                //             backgroundColor:
+                //                 const Color.fromARGB(255, 236, 176, 47)),
+                //         onPressed: () {
+                //           setState(() {
+                //             isProduct = true;
+                //           });
+                //         },
+                //         child: Text('Product')),
+                //     SizedBox(
+                //       width: size.width * 0.02,
+                //     ),
+                //     ElevatedButton(
+                //         style: ElevatedButton.styleFrom(
+                //             shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(12)),
+                //             //minimumSize: Size(size.width, 50),
+                //             backgroundColor:
+                //                 const Color.fromARGB(255, 236, 176, 47)),
+                //         onPressed: () {
+                //           setState(() {
+                //             isProduct = false;
+                //           });
+                //         },
+                //         child: Text('Food')),
+                //   ],
+                // ),
+                SizedBox(
+                  height: size.height * 0.01,
+                ),
                 _productUnit(),
+                // Visibility(visible: isProduct, child: _productUnit()),
+                // Visibility(
+                //   child: Row(
+                //     children: [
+                //       TextButton(
+                //           style: ElevatedButton.styleFrom(
+                //               shape: RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(12)),
+                //               //minimumSize: Size(size.width, 50),
+                //               backgroundColor:
+                //                   const Color.fromARGB(255, 236, 176, 47)),
+                //           onPressed: () {},
+                //           child:
+                //               Text('S', style: TextStyle(color: Colors.white))),
+                //       TextButton(
+                //           onPressed: () {},
+                //           child: Text(
+                //             'M',
+                //           )),
+                //       TextButton(onPressed: () {}, child: Text('XL')),
+                //       TextButton(onPressed: () {}, child: Text('XXL')),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: size.height * 0.025,
                 ),

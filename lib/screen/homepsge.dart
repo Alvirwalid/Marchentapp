@@ -35,19 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Row(
-          children: [
-            const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            Textwidget(
-              text: 'Home',
-              color: Colors.black,
-              istitle: true,
-              fs: 22,
-            )
-          ],
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Textwidget(
+            text: 'Home',
+            color: Colors.black,
+            istitle: true,
+            fs: 22,
+          ),
         ),
       ),
       body: Container(
@@ -57,19 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: size.height * 0.03,
-              ),
+              // SizedBox(
+              //   height: size.height * 0.03,
+              // ),
               GridView.count(
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 10,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
                 shrinkWrap: true,
-                physics: ScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 crossAxisCount: 2,
                 children: [
                   CardWidget(
                     title: 'Todays Sales',
-                    fs: 16,
+                    fs: 15,
                     color: Colors.grey,
                     text: 'BDT  25,000',
                     // pfs: 18,
@@ -78,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   CardWidget(
                     title: 'Panding Orders',
-                    fs: 16,
+                    fs: 15,
                     color: Colors.grey,
                     text: '25',
                     // pfs: 22,
@@ -87,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   CardWidget(
                     title: 'Stock Available',
-                    fs: 16,
+                    fs: 15,
                     color: Colors.grey,
                     text: '500',
                     // pfs: 22,
@@ -96,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   CardWidget(
                     title: 'Todays Order',
-                    fs: 16,
+                    fs: 15,
                     color: Colors.grey,
                     text: 'BDT  20,000',
                     // pfs: 22,
@@ -108,11 +103,14 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              Textwidget(
-                text: 'Order Overview',
-                color: Colors.black,
-                istitle: true,
-                fs: 24,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Textwidget(
+                  text: 'Order Overview',
+                  color: Colors.black,
+                  istitle: true,
+                  fs: 20,
+                ),
               ),
               //   LineChartWidget()
               const SizedBox(
@@ -125,57 +123,69 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: LineChartWidget(),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
 
-              Row(
-                children: [
-                  Textwidget(
-                    text: 'Top Selling Product',
-                    color: Colors.black,
-                    istitle: true,
-                    fs: 20,
-                  ),
-                  Spacer(),
-                  Textwidget(text: 'More', color: Colors.black)
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Textwidget(
+                      text: 'Top Selling Product',
+                      color: Colors.black,
+                      istitle: true,
+                      fs: 20,
+                    ),
+                    Spacer(),
+                    Textwidget(text: 'More', color: Colors.black)
+                  ],
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
 
-              GridView.builder(
-                physics: ScrollPhysics(),
-                itemCount: productList.length,
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 15, crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              opacity: 0.9,
-                              image:
-                                  NetworkImage("${productList[index].image}"))),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Textwidget(
-                          text: "BDT ${productList[index].price}",
-                          color: Colors.black,
-                          fs: 16,
-                          istitle: true,
-                        ),
+              Padding(
+                padding: const EdgeInsets.only(left: 2, right: 2),
+                child: GridView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: productList.length,
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 8, crossAxisCount: 2),
+                  itemBuilder: (context, index) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 120,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      // fit: BoxFit.fill,
+                                      // opacity: 0.9,
+                                      image: NetworkImage(
+                                          "${productList[index].image}"))),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Textwidget(
+                            text: "BDT ${productList[index].price}",
+                            color: Colors.black,
+                            fs: 16,
+                            istitle: true,
+                          ),
+                        ],
                       ),
-                    ),
-                  );
-                  ;
-                },
+                    );
+                    ;
+                  },
+                ),
               )
             ],
           ),

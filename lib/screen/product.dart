@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marchentapp/innerscreen/addproduct.dart';
+import 'package:marchentapp/innerscreen/addproductwithapi.dart';
 import 'package:provider/provider.dart';
 
+import '../innerscreen/postmethod.dart';
 import '../model/productmodel.dart';
 import '../provider/productprovider.dart';
 import '../widgets/availableproductwidget.dart';
@@ -25,36 +27,43 @@ class ProductScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Row(
-          children: [
-            const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            Textwidget(
-              text: 'Stock Analytics',
-              color: Colors.black,
-              istitle: true,
-              fs: 22,
-            )
-          ],
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 20,
+              ),
+              const SizedBox(width: 10),
+              Textwidget(
+                text: 'Stock Analytics',
+                color: Colors.black,
+                istitle: true,
+                fs: 22,
+              )
+            ],
+          ),
         ),
       ),
       body: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: size.height * 0.04,
-              ),
+              // SizedBox(
+              //   height: size.height * 0.04,
+              // ),
               Row(
                 children: [
                   Expanded(
                     flex: 1,
                     child: Container(
+                      height: 100,
                       padding:
                           EdgeInsets.symmetric(horizontal: 8, vertical: 20),
                       decoration: BoxDecoration(
@@ -65,7 +74,7 @@ class ProductScreen extends StatelessWidget {
                         children: [
                           Textwidget(text: 'Product In', color: Colors.grey),
                           const SizedBox(
-                            height: 15,
+                            height: 5,
                           ),
                           Textwidget(
                             text: '500',
@@ -83,16 +92,18 @@ class ProductScreen extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: Container(
+                      height: 100,
                       padding:
                           EdgeInsets.symmetric(horizontal: 8, vertical: 20),
                       decoration: BoxDecoration(
                           color: Color(0xffF7F7F7),
                           borderRadius: BorderRadius.circular(10)),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Textwidget(text: 'Product Out', color: Colors.grey),
                           const SizedBox(
-                            height: 15,
+                            height: 5,
                           ),
                           Textwidget(
                             text: '400',
@@ -106,7 +117,7 @@ class ProductScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: size.height * 0.02,
+                height: size.height * 0.01,
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -115,7 +126,8 @@ class ProductScreen extends StatelessWidget {
                       minimumSize: Size(size.width, 50),
                       backgroundColor: const Color.fromARGB(255, 236, 176, 47)),
                   onPressed: () {
-                    Get.toNamed(AddProduct.routename);
+                    // Get.toNamed(AddProduct.routename);
+                    Get.toNamed(AddproductWithApi.routename);
                   },
                   child: Textwidget(
                     text: 'Add Product',
@@ -123,19 +135,19 @@ class ProductScreen extends StatelessWidget {
                     istitle: true,
                   )),
               SizedBox(
-                height: size.height * 0.01,
+                height: size.height * 0.02,
               ),
               Textwidget(
                 text: 'Available Product List',
                 color: Colors.black,
-                fs: 15,
+                fs: 16,
                 istitle: true,
               ),
               SizedBox(
-                height: size.height * 0.01,
+                height: size.height * 0.02,
               ),
               ListView.builder(
-                physics: ScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: productList.length,
                 itemBuilder: (context, index) {

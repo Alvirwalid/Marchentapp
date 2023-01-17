@@ -1,14 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:marchentapp/fetch_screen.dart';
 import 'package:marchentapp/innerscreen/addproduct.dart';
+import 'package:marchentapp/innerscreen/addproductwithapi.dart';
 import 'package:marchentapp/provider/productprovider.dart';
+import 'package:marchentapp/screen/auth/loginpage.dart';
+import 'package:marchentapp/screen/auth/register.dart';
 import 'package:marchentapp/screen/bottombar.dart';
 import 'package:marchentapp/screen/homepsge.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
   await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -35,9 +42,17 @@ class MyApp extends StatelessWidget {
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BottomBar(),
+        home: FetchScreen(),
         getPages: [
-          GetPage(name: AddProduct.routename, page: () => AddProduct())
+          GetPage(name: AddProduct.routename, page: () => AddProduct()),
+          GetPage(
+              name: AddproductWithApi.routename,
+              page: () => const AddproductWithApi()),
+          GetPage(name: BottomBar.routename, page: () => const BottomBar()),
+          GetPage(name: LoginPage.routename, page: () => const LoginPage()),
+          GetPage(
+              name: RegisterScreens.routename,
+              page: () => const RegisterScreens()),
         ],
       ),
     );

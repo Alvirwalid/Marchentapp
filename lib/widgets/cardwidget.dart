@@ -42,7 +42,7 @@ class CardWidget extends StatelessWidget {
                 istitle: istitle,
               ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
               Textwidget(
                 text: text,

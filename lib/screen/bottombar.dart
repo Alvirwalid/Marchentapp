@@ -12,13 +12,14 @@ import 'homepsge.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
+  static String routename = '/BottomBar';
 
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int selectesindex = 2;
+  int selectesindex = 0;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'HomeScreen'},
     {'page': const OrdersScreen(), 'title': 'OrdersScreen'},
@@ -63,16 +64,16 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 0
                                 ? IconlyBold.home
                                 : IconlyLight.home,
-                            size: 40,
+                            size: 30,
                             color:
-                                selectesindex == 0 ? Colors.blue : Colors.black,
+                                selectesindex == 0 ? Colors.blue : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Home',
                               color: selectesindex == 0
                                   ? Colors.blue
-                                  : Colors.black,
-                              fs: 18)
+                                  : Colors.grey,
+                              fs: 15)
                         ],
                       ),
                     ),
@@ -89,16 +90,16 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 1
                                 ? IconlyBold.document
                                 : IconlyLight.document,
-                            size: 40,
+                            size: 30,
                             color:
-                                selectesindex == 1 ? Colors.blue : Colors.black,
+                                selectesindex == 1 ? Colors.blue : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Orders',
                               color: selectesindex == 1
                                   ? Colors.blue
-                                  : Colors.black,
-                              fs: 16)
+                                  : Colors.grey,
+                              fs: 15)
                         ],
                       ),
                     ),
@@ -114,16 +115,16 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 2
                                 ? IconlyBold.category
                                 : IconlyLight.category,
-                            size: 40,
+                            size: 30,
                             color:
-                                selectesindex == 2 ? Colors.blue : Colors.black,
+                                selectesindex == 2 ? Colors.blue : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Product',
                               color: selectesindex == 2
                                   ? Colors.blue
-                                  : Colors.black,
-                              fs: 18)
+                                  : Colors.grey,
+                              fs: 15)
                         ],
                       ),
                     ),
@@ -137,16 +138,16 @@ class _BottomBarState extends State<BottomBar> {
                         children: [
                           Icon(
                             Icons.luggage_rounded,
-                            size: 40,
+                            size: 30,
                             color:
-                                selectesindex == 3 ? Colors.blue : Colors.black,
+                                selectesindex == 3 ? Colors.blue : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Manages',
                               color: selectesindex == 3
                                   ? Colors.blue
-                                  : Colors.black,
-                              fs: 18)
+                                  : Colors.grey,
+                              fs: 15)
                         ],
                       ),
                     ),
@@ -162,16 +163,16 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 4
                                 ? IconlyBold.profile
                                 : IconlyLight.profile,
-                            size: 40,
+                            size: 30,
                             color:
-                                selectesindex == 4 ? Colors.blue : Colors.black,
+                                selectesindex == 4 ? Colors.blue : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Profile',
                               color: selectesindex == 4
                                   ? Colors.blue
-                                  : Colors.black,
-                              fs: 18)
+                                  : Colors.grey,
+                              fs: 15)
                         ],
                       ),
                     ),
@@ -180,137 +181,6 @@ class _BottomBarState extends State<BottomBar> {
               ),
             ),
           ),
-        )
-
-        // bottomNavigationBar: Padding(
-        //   padding: const EdgeInsets.only(bottom: 10, left: 16, right: 16),
-        //   child: BottomAppBar(
-        //     shape: AutomaticNotchedShape(
-        //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-        //     elevation: 10,
-        //     child: Container(
-        //       decoration: BoxDecoration(
-        //           color: Colors.white, borderRadius: BorderRadius.circular(10)),
-        //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        //       child: FittedBox(
-        //         child: Row(
-        //           children: [
-        //             MaterialButton(
-        //               onPressed: () {
-        //                 setState(() {
-        //                   selectesindex = 0;
-        //                 });
-        //               },
-        //               child: Column(
-        //                 children: [
-        //                   Icon(
-        //                     Icons.home,
-        //                     size: 30,
-        //                     color:
-        //                         selectesindex == 0 ? Colors.blue : Colors.black,
-        //                   ),
-        //                   Textwidget(
-        //                       text: 'Home',
-        //                       color:
-        //                           selectesindex == 0 ? Colors.blue : Colors.black,
-        //                       fs: 18)
-        //                 ],
-        //               ),
-        //             ),
-        //             MaterialButton(
-        //               onPressed: () {
-        //                 setState(() {
-        //                   selectesindex = 1;
-        //                 });
-        //               },
-        //               child: Column(
-        //                 children: [
-        //                   Icon(
-        //                     Icons.book,
-        //                     size: 30,
-        //                     color:
-        //                         selectesindex == 1 ? Colors.blue : Colors.black,
-        //                   ),
-        //                   Textwidget(
-        //                       text: 'Orders',
-        //                       color:
-        //                           selectesindex == 1 ? Colors.blue : Colors.black,
-        //                       fs: 12)
-        //                 ],
-        //               ),
-        //             ),
-        //             MaterialButton(
-        //               onPressed: () {
-        //                 setState(() {
-        //                   selectesindex = 2;
-        //                 });
-        //               },
-        //               child: Column(
-        //                 children: [
-        //                   Icon(
-        //                     Icons.category,
-        //                     size: 30,
-        //                     color:
-        //                         selectesindex == 2 ? Colors.blue : Colors.black,
-        //                   ),
-        //                   Textwidget(
-        //                       text: 'Product',
-        //                       color:
-        //                           selectesindex == 2 ? Colors.blue : Colors.black,
-        //                       fs: 12)
-        //                 ],
-        //               ),
-        //             ),
-        //             MaterialButton(
-        //               onPressed: () {
-        //                 setState(() {
-        //                   selectesindex = 3;
-        //                 });
-        //               },
-        //               child: Column(
-        //                 children: [
-        //                   Icon(
-        //                     Icons.manage_accounts,
-        //                     size: 30,
-        //                     color:
-        //                         selectesindex == 3 ? Colors.blue : Colors.black,
-        //                   ),
-        //                   Textwidget(
-        //                       text: 'Manages',
-        //                       color:
-        //                           selectesindex == 3 ? Colors.blue : Colors.black,
-        //                       fs: 12)
-        //                 ],
-        //               ),
-        //             ),
-        //             MaterialButton(
-        //               onPressed: () {
-        //                 setState(() {
-        //                   selectesindex = 4;
-        //                 });
-        //               },
-        //               child: Column(
-        //                 children: [
-        //                   Icon(
-        //                     Icons.person,
-        //                     size: 30,
-        //                     color:
-        //                         selectesindex == 4 ? Colors.blue : Colors.black,
-        //                   ),
-        //                   Textwidget(
-        //                       text: 'Profile',
-        //                       color:
-        //                           selectesindex == 4 ? Colors.blue : Colors.black,
-        //                       fs: 12)
-        //                 ],
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        );
+        ));
   }
 }
