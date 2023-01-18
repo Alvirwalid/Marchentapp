@@ -18,14 +18,16 @@ class GoogleButton extends StatefulWidget {
 
 class _GoogleButtonState extends State<GoogleButton> {
 //  String? user = FirebaseAuth.instance.currentUser!.uid;
+
+  bool _isloaded = false;
   Future<void> googleSignIn(context) async {
     final googleSignIn = GoogleSignIn();
 
     final googleAccount = await googleSignIn.signIn();
 
-    // setState(() {
-    //   _isloaded = true;
-    // });
+    setState(() {
+      _isloaded = true;
+    });
 
     if (googleAccount != null) {
       final googleAuth = await googleAccount.authentication;
@@ -47,26 +49,29 @@ class _GoogleButtonState extends State<GoogleButton> {
               idToken: googleAuth.idToken));
 
           print('Login Successfully');
+          setState(() {
+            _isloaded = false;
+          });
 
-          Get.offAllNamed(BottomBar.routename);
+          Get.offAllNamed(BottomBar.routename, arguments: _isloaded);
         } on FirebaseAuthException catch (error) {
           print('An error occures $error');
           GlobalMethod.errorDialog(ctx: context, subtitle: '$error');
-          // setState(() {
-          //   _isloaded = false;
-          // });
+          setState(() {
+            _isloaded = false;
+          });
 
           print('An error occures $error');
         } catch (error) {
           GlobalMethod.errorDialog(ctx: context, subtitle: '$error');
-          // setState(() {
-          //   _isloaded = false;
-          // });
+          setState(() {
+            _isloaded = false;
+          });
           print('An error occures $error');
         } finally {
-          // setState(() {
-          //   _isloaded = false;
-          // });
+          setState(() {
+            _isloaded = false;
+          });
         }
       }
     }

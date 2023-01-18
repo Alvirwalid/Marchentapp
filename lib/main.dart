@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: RegisterScreens.routename,
               page: () => const RegisterScreens()),
+          GetPage(name: FetchScreen.routename, page: () => const FetchScreen()),
         ],
       ),
     );

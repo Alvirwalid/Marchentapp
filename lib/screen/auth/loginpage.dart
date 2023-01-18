@@ -11,6 +11,7 @@ import 'package:marchentapp/screen/bottombar.dart';
 import 'package:marchentapp/screen/loadingmanager.dart';
 import 'package:marchentapp/widgets/googlebutton.dart';
 import 'package:marchentapp/widgets/textwidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constss/firebase_auth.dart';
 import '../../service/globalmethod.dart';
@@ -48,6 +49,12 @@ class _LoginPageState extends State<LoginPage> {
         authinstance.signInWithEmailAndPassword(
             email: _emailCController.text.toLowerCase().trim(),
             password: _passwordCController.text);
+
+        SharedPreferences shrpre = await SharedPreferences.getInstance();
+        shrpre.setString('email', _emailCController.text.toString());
+        shrpre.setString('password', _passwordCController.text.toString());
+
+        setState(() {});
         Get.offAllNamed(BottomBar.routename);
         setState(() {
           _isloaded = false;

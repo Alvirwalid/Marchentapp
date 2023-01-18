@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:get/get.dart';
+import 'package:marchentapp/screen/loadingmanager.dart';
 import 'package:marchentapp/screen/manages.dart';
 import 'package:marchentapp/screen/orders.dart';
 import 'package:marchentapp/screen/product.dart';
@@ -25,7 +27,7 @@ class _BottomBarState extends State<BottomBar> {
     {'page': const OrdersScreen(), 'title': 'OrdersScreen'},
     {'page': ProductScreen(), 'title': 'ProductScreen'},
     {'page': const ManagesScreen(), 'title': 'ManagesScreen'},
-    {'page': const ProfileScreen(), 'title': 'ProductScreen'},
+    {'page': ProfileScreen(), 'title': 'ProductScreen'},
   ];
   void selectedpage(int index) {
     setState(() {
@@ -137,7 +139,7 @@ class _BottomBarState extends State<BottomBar> {
                       child: Column(
                         children: [
                           Icon(
-                            Icons.luggage_rounded,
+                            Icons.event_available,
                             size: 30,
                             color:
                                 selectesindex == 3 ? Colors.blue : Colors.grey,
