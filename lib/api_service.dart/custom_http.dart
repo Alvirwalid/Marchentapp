@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:marchentapp/model/cartmodel.dart';
 import 'package:marchentapp/model/ordermodel.dart';
 import 'package:marchentapp/model/productmodel.dart';
 

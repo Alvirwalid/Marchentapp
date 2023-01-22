@@ -14,7 +14,6 @@ import '../widgets/textwidget.dart';
 class OrdersScreen extends StatelessWidget {
   OrdersScreen({super.key});
   List<OrderModel> orderList = [];
-  List<CartModel> cartList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,6 @@ class OrdersScreen extends StatelessWidget {
     var orderprovider = Provider.of<OrderProvider>(context).getOrderData();
 
     orderList = Provider.of<OrderProvider>(context).orderList;
-    cartList = Provider.of<OrderProvider>(context).cartList;
 
     return Scaffold(
       backgroundColor: Color(0xffFFFFFF),
