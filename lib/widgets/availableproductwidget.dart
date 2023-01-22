@@ -22,54 +22,58 @@ class AvailableProduct extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
       ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              width: double.infinity,
-              height: 80,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      image: NetworkImage('${productList.image}'))),
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Textwidget(
-                    text: "${productList.name}",
-                    color: Colors.black,
-                    istitle: true,
-                    fs: 18,
-                  ),
-                  const SizedBox(height: 5),
-                  Textwidget(
-                    text: "BDT ${productList.price}",
-                    color: Colors.black,
-                    fs: 12,
-                  ),
-                  const SizedBox(height: 5),
-                  Textwidget(
-                    text: "In Stock: 45 Pcs",
-                    color: Colors.black,
-                    fs: 12,
-                  ),
-                  Textwidget(
-                    text: "Last Restock: 60 Pcs",
-                    color: Colors.black,
-                    fs: 12,
-                  ),
-                ],
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color(0xfff7f7f7), borderRadius: BorderRadius.circular(12)),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                width: double.infinity,
+                height: 80,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        image: NetworkImage('${productList.image}'))),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 4,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Textwidget(
+                      text: "${productList.name}",
+                      color: Colors.black,
+                      istitle: true,
+                      fs: 18,
+                    ),
+                    const SizedBox(height: 5),
+                    Textwidget(
+                      text: "BDT ${productList.price}",
+                      color: Colors.black,
+                      fs: 12,
+                    ),
+                    const SizedBox(height: 5),
+                    Textwidget(
+                      text: "In Stock: 45 Pcs",
+                      color: Colors.black,
+                      fs: 12,
+                    ),
+                    Textwidget(
+                      text: "Last Restock: 60 Pcs",
+                      color: Colors.black,
+                      fs: 12,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

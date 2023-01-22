@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:marchentapp/constss/firebase_auth.dart';
 import 'package:marchentapp/screen/auth/loginpage.dart';
 import 'package:marchentapp/screen/loadingmanager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../service/globalmethod.dart';
 import '../widgets/textwidget.dart';
@@ -44,6 +45,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  _clearData() async {}
+
   @override
   void initState() {
     // TODO: implement initState
@@ -72,20 +75,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-        actions: [
-          CircleAvatar(
-            backgroundColor: Color(0xff38C1F2),
-            radius: 16,
-            child: Icon(
-              Icons.edit,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          )
-        ],
+        // actions: [
+        //   CircleAvatar(
+        //     backgroundColor: Color(0xff38C1F2),
+        //     radius: 16,
+        //     child: Icon(
+        //       Icons.edit,
+        //       color: Colors.white,
+        //       size: 20,
+        //     ),
+        //   ),
+        //   SizedBox(
+        //     width: 15,
+        //   )
+        // ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -149,7 +152,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ? IconlyLight.login
                               : IconlyLight.logout,
                           title: user == null ? 'Login' : 'Logout',
-                          onpressed: () {
+                          onpressed: () async {
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            setState(() {
+                              pref.setString('email', '');
+                              pref.setString('password', '');
+                              pref.setString('accessToken', '');
+                              pref.setString('idToken', '');
+                            });
                             if (user == null) {
                               Get.toNamed(LoginPage.routename);
                               return;

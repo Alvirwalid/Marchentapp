@@ -19,23 +19,23 @@ class FetchScreen extends StatefulWidget {
 class _FetchScreenState extends State<FetchScreen> {
   //List<String> imagelist = Constss.imglist[0]['imagepath'];
 
-  var accessToken;
-  var idToken;
+  String? accessToken;
+  String? idToken;
   String? email, password;
   isLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {});
-    accessToken = sharedPreferences.getString('accessToken');
-    idToken = sharedPreferences.getString('idToken');
-    email = sharedPreferences.getString('email');
-    password = sharedPreferences.getString('password');
+    accessToken = sharedPreferences.getString('accessToken').toString();
+    idToken = sharedPreferences.getString('idToken').toString();
+    email = sharedPreferences.getString('email').toString();
+    password = sharedPreferences.getString('password').toString();
 
     print('email iss $email');
     print('password iss $password');
     print('accessToken iss $accessToken');
     print('idToken iss $idToken');
 
-    if (accessToken != null && idToken != null) {
+    if (accessToken!.isNotEmpty && idToken!.isNotEmpty) {
       return true;
     } else {
       return false;
@@ -44,15 +44,15 @@ class _FetchScreenState extends State<FetchScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    ///  TODO: implement initState
 
     isLogin().whenComplete(() {
       Future.delayed(
-          Duration(seconds: 2),
+          Duration(seconds: 3),
           (() => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (_) {
-                return accessToken != null && idToken != null ||
-                        email != null && password != null
+                return accessToken!.isNotEmpty && idToken!.isNotEmpty ||
+                        email!.isNotEmpty && password!.isNotEmpty
                     ? BottomBar()
                     : LoginPage();
               }))));
@@ -63,26 +63,17 @@ class _FetchScreenState extends State<FetchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            './asset/image/landing/buyfood.jpg',
-            fit: BoxFit.cover,
-            height: double.infinity,
-          ),
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.black.withOpacity(0.7),
-          ),
-          const Center(
-            child: SpinKitFadingFour(
-              color: Colors.white,
-            ),
-          )
-        ],
+        body: Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Center(
+        child: Image.asset(
+          './asset/image/jadurjinicom.png',
+          fit: BoxFit.cover,
+          height: size.height * 0.5,
+        ),
       ),
-    );
+    ));
   }
 }

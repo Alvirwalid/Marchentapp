@@ -1,4 +1,12 @@
 class Constss {
+  static List<Map<String, dynamic>> phonelist = [
+    {'imagepath': './asset/image/phone.jpg', 'price': ' 4000'},
+    {'imagepath': './asset/image/phone.jpg', 'price': ' 4000'},
+    {'imagepath': './asset/image/phone.jpg', 'price': ' 4000'},
+    {'imagepath': './asset/image/phone.jpg', 'price': ' 4000'},
+    {'imagepath': './asset/image/phone.jpg', 'price': ' 4000'},
+    {'imagepath': './asset/image/phone.jpg', 'price': ' 4000'},
+  ];
   static List<String> offerList = [
     'asset/image/offres/Offer1.jpg',
     'asset/image/offres/Offer2.jpg',

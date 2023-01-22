@@ -24,9 +24,9 @@ class _BottomBarState extends State<BottomBar> {
   int selectesindex = 0;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'HomeScreen'},
-    {'page': const OrdersScreen(), 'title': 'OrdersScreen'},
+    {'page': OrdersScreen(), 'title': 'OrdersScreen'},
     {'page': ProductScreen(), 'title': 'ProductScreen'},
-    {'page': const ManagesScreen(), 'title': 'ManagesScreen'},
+    // {'page': const ManagesScreen(), 'title': 'ManagesScreen'},
     {'page': ProfileScreen(), 'title': 'ProductScreen'},
   ];
   void selectedpage(int index) {
@@ -66,16 +66,17 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 0
                                 ? IconlyBold.home
                                 : IconlyLight.home,
-                            size: 30,
-                            color:
-                                selectesindex == 0 ? Colors.blue : Colors.grey,
+                            size: 25,
+                            color: selectesindex == 0
+                                ? Color(0xffFFB000)
+                                : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Home',
                               color: selectesindex == 0
-                                  ? Colors.blue
+                                  ? Color(0xffFFB000)
                                   : Colors.grey,
-                              fs: 15)
+                              fs: 12)
                         ],
                       ),
                     ),
@@ -92,16 +93,17 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 1
                                 ? IconlyBold.document
                                 : IconlyLight.document,
-                            size: 30,
-                            color:
-                                selectesindex == 1 ? Colors.blue : Colors.grey,
+                            size: 25,
+                            color: selectesindex == 1
+                                ? Color(0xffFFB000)
+                                : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Orders',
                               color: selectesindex == 1
-                                  ? Colors.blue
+                                  ? Color(0xffFFB000)
                                   : Colors.grey,
-                              fs: 15)
+                              fs: 12)
                         ],
                       ),
                     ),
@@ -117,19 +119,44 @@ class _BottomBarState extends State<BottomBar> {
                             selectesindex == 2
                                 ? IconlyBold.category
                                 : IconlyLight.category,
-                            size: 30,
-                            color:
-                                selectesindex == 2 ? Colors.blue : Colors.grey,
+                            size: 25,
+                            color: selectesindex == 2
+                                ? Color(0xffFFB000)
+                                : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Product',
                               color: selectesindex == 2
-                                  ? Colors.blue
+                                  ? Color(0xffFFB000)
                                   : Colors.grey,
-                              fs: 15)
+                              fs: 12)
                         ],
                       ),
                     ),
+                    // MaterialButton(
+                    //   onPressed: () {
+                    //     setState(() {
+                    //       selectesindex = 3;
+                    //     });
+                    //   },
+                    //   child: Column(
+                    //     children: [
+                    //       Icon(
+                    //         Icons.event_available,
+                    //         size: 30,
+                    //         color: selectesindex == 3
+                    //             ? Color(0xffFFB000)
+                    //             : Colors.grey,
+                    //       ),
+                    //       Textwidget(
+                    //           text: 'Manages',
+                    //           color: selectesindex == 3
+                    //               ? Color(0xffFFB000)
+                    //               : Colors.grey,
+                    //           fs: 15)
+                    //     ],
+                    //   ),
+                    // ),
                     MaterialButton(
                       onPressed: () {
                         setState(() {
@@ -139,42 +166,20 @@ class _BottomBarState extends State<BottomBar> {
                       child: Column(
                         children: [
                           Icon(
-                            Icons.event_available,
-                            size: 30,
-                            color:
-                                selectesindex == 3 ? Colors.blue : Colors.grey,
-                          ),
-                          Textwidget(
-                              text: 'Manages',
-                              color: selectesindex == 3
-                                  ? Colors.blue
-                                  : Colors.grey,
-                              fs: 15)
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          selectesindex = 4;
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          Icon(
-                            selectesindex == 4
+                            selectesindex == 3
                                 ? IconlyBold.profile
                                 : IconlyLight.profile,
-                            size: 30,
-                            color:
-                                selectesindex == 4 ? Colors.blue : Colors.grey,
+                            size: 25,
+                            color: selectesindex == 3
+                                ? Color(0xffFFB000)
+                                : Colors.grey,
                           ),
                           Textwidget(
                               text: 'Profile',
-                              color: selectesindex == 4
-                                  ? Colors.blue
+                              color: selectesindex == 3
+                                  ? Color(0xffFFB000)
                                   : Colors.grey,
-                              fs: 15)
+                              fs: 12)
                         ],
                       ),
                     ),

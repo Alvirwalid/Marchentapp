@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -145,48 +146,93 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 10,
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(left: 2, right: 2),
-                child: GridView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: productList.length,
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 8, crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 120,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                      // fit: BoxFit.fill,
-                                      // opacity: 0.9,
-                                      image: NetworkImage(
-                                          "${productList[index].image}"))),
+              productList.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 2, right: 2),
+                      child: GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: productList.length,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 8, crossAxisCount: 2),
+                        itemBuilder: (context, index) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 120,
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                            // fit: BoxFit.fill,
+                                            // opacity: 0.9,
+                                            image: NetworkImage(
+                                                "${productList[index].image}"))),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Textwidget(
+                                  text: "BDT ${productList[index].price}",
+                                  color: Colors.black,
+                                  fs: 16,
+                                  istitle: true,
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Textwidget(
-                            text: "BDT ${productList[index].price}",
-                            color: Colors.black,
-                            fs: 16,
-                            istitle: true,
-                          ),
-                        ],
+                          );
+                          ;
+                        },
                       ),
-                    );
-                    ;
-                  },
-                ),
-              )
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 2, right: 2),
+                      child: GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: Constss.phonelist.length,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 8, crossAxisCount: 2),
+                        itemBuilder: (context, index) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 120,
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            // opacity: 0.9,
+                                            image: AssetImage(
+                                                './asset/image/phone.png'))),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Textwidget(
+                                  text: "BDT 5000",
+                                  color: Colors.black,
+                                  fs: 16,
+                                  istitle: true,
+                                ),
+                              ],
+                            ),
+                          );
+                          ;
+                        },
+                      ),
+                    )
             ],
           ),
         ),

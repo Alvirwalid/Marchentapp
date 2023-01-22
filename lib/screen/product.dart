@@ -124,14 +124,14 @@ class ProductScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       minimumSize: Size(size.width, 50),
-                      backgroundColor: const Color.fromARGB(255, 236, 176, 47)),
+                      backgroundColor: Color(0xffFFB000)),
                   onPressed: () {
                     // Get.toNamed(AddProduct.routename);
                     Get.toNamed(AddproductWithApi.routename);
                   },
                   child: Textwidget(
                     text: 'Add Product',
-                    color: Colors.black,
+                    color: Colors.white,
                     istitle: true,
                   )),
               SizedBox(

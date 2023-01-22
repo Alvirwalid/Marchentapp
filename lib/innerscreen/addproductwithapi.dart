@@ -29,15 +29,15 @@ class AddproductWithApi extends StatefulWidget {
 }
 
 class _AddproductWithApiState extends State<AddproductWithApi> {
-  final _productcategory = TextEditingController();
-  final _subcatname = TextEditingController();
   final _productname = TextEditingController();
-  final _productPrice = TextEditingController();
-  final _productdetails = TextEditingController();
+  final _productcategory = TextEditingController();
   final _productType = TextEditingController();
+  final _subcatname = TextEditingController();
+  final _productPrice = TextEditingController();
   final _productColor = TextEditingController();
-  final _shopLocation = TextEditingController();
-  final _shopName = TextEditingController();
+  final _productquantity = TextEditingController();
+  final _productunit = TextEditingController();
+  final _productdetails = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
   List<XFile>? imagefiles;
@@ -65,10 +65,10 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
   String? productimageurl;
 
   final User? user = authinstance.currentUser;
-  String? shopimageUrl, loaction, rating, ShopName;
+  String? shopimageUrl, loaction, shoprating, ShopName;
   Future<void> getUserData() async {
     try {
-      final _uid = user!.uid;
+      //final _uid = user!.uid;
 
       FirebaseFirestore.instance
           .collection('userinfo')
@@ -77,11 +77,12 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
         querySnapshot.docs.forEach((doc) {
           print(doc["shopname"]);
 
-          ShopName = doc["shopname"];
-          loaction = doc["location"];
-          shopimageUrl = doc["imageurl"];
-          rating = doc["rating"];
-          setState(() {});
+          setState(() {
+            ShopName = doc["shopname"];
+            loaction = doc["location"];
+            shopimageUrl = doc["imageurl"];
+            shoprating = doc["rating"];
+          });
         });
       });
     } on FirebaseFirestore catch (error) {
@@ -93,28 +94,28 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
 
   Future createProduct() async {
     final uuid = Uuid().v4();
+    setState(() {
+      _imagesUrl = [];
+    });
 
     try {
       int i = 0;
       for (XFile imageFile in imagefiles!) {
-        try {
-          var ref = FirebaseStorage.instance
-              .ref()
-              .child('ProductImages')
-              .child(Uuid().v4())
-              .child(i.toString() + '.jpg');
+        var ref = FirebaseStorage.instance
+            .ref()
+            .child('ProductImages')
+            .child(Uuid().v4())
+            .child(i.toString() + '.jpg');
 
-          await ref.putFile(File(imageFile.path));
+        await ref.putFile(File(imageFile.path));
 
-          var url = await ref.getDownloadURL();
+        var url = await ref.getDownloadURL();
 
+        setState(() {
           _imagesUrl.add(url);
-          setState(() {});
+        });
 
-          ++i;
-        } catch (err) {
-          print(err);
-        }
+        ++i;
       }
       setState(() {});
 
@@ -124,44 +125,26 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
-          'productCategory': _productcategory.text.toString(),
-          'productSubCategory': _subcatname.text.toString(),
           'productName': _productname.text.toString(),
-          'productPrice': _productPrice.text.toString(),
-          'productRating': _rating,
-          'productDescription': _productdetails.text.toString(),
+          'productCategory': _productcategory.text.toString(),
           'productType': _productType.text.toString(),
-          'productSize': _productSize,
+          'productSubCategory': _subcatname.text.toString(),
+          'productPrice': _productPrice.text.toString(),
           'productColor': _productColor.text.toString(),
-          'shopLocation': loaction!,
-          'shopName': ShopName!,
-          'shopRating': rating!,
+          'productquantity': _productquantity.text.toString(),
+          'productRating': _rating,
+          'productunit': _productunit.text.toString(),
+          'productDescription': _productdetails.text.toString(),
+          'shopLocation': loaction,
+          'shopName': ShopName,
+          'shopRating': shoprating,
           'productImage': _imagesUrl,
-          'shopImage': shopimageUrl!,
+          'shopImage': shopimageUrl,
         }),
       );
     } catch (e) {
       print(e.toString());
     }
-  }
-
-  _clearForm() async {
-    setState(() {
-      _productcategory.clear();
-      _subcatname.clear();
-      _productname.clear();
-      _productPrice.clear();
-      _productname.clear();
-      _productdetails.clear();
-      _productType.clear();
-      _productColor.clear();
-      _productSize = '';
-      _rating = '';
-      loaction = '';
-      ShopName = '';
-      _imagesUrl = [];
-      shopimageUrl = '';
-    });
   }
 
   @override
@@ -213,10 +196,7 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
             IconButton(
               onPressed: () {
                 Get.back();
-                // _clearForm().whenComplete(() {
-                //   Future.delayed(Duration(seconds: 1),
-                //       (() => Navigator.of(context).pop()));
-                // });
+
                 //Navigator.of(context).pop();
               },
               icon: Icon(
@@ -244,23 +224,63 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 10,
+                ),
                 imagefiles != null
-                    ? GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: imagefiles!.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisSpacing: 5, crossAxisCount: 5),
-                        itemBuilder: (context, index) {
-                          return Container(
-                              child: Card(
-                            child: Container(
-                              // height: 100,
-                              // width: 100,
-                              child:
-                                  Image.file(io.File(imagefiles![index].path)),
+                    ? Stack(
+                        children: [
+                          GridView.builder(
+                            shrinkWrap: true,
+                            itemCount: imagefiles!.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisSpacing: 8,
+                                    mainAxisSpacing: 8,
+                                    crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: Container(
+                                  padding: EdgeInsets.all(2),
+                                  // height: 100,
+                                  //  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: FileImage(io.File(
+                                              imagefiles![index].path)))),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          imagefiles!.removeAt(index);
+                                        });
+                                      },
+                                      child: Icon(
+                                        IconlyBold.delete,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          Positioned(
+                            top: size.height * 0.07,
+                            left: size.width * 0.40,
+                            child: InkWell(
+                              onTap: () {
+                                openImages();
+                              },
+                              child: Icon(
+                                Icons.image,
+                                size: 40,
+                              ),
                             ),
-                          ));
-                        },
+                          )
+                        ],
                       )
                     : InkWell(
                         onTap: () {
@@ -285,7 +305,7 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
                   text: 'Product name',
                   color: Colors.black,
                   istitle: true,
-                  fs: 15,
+                  fs: 16,
                 ),
                 SizedBox(
                   height: size.height * 0.01,
@@ -300,16 +320,17 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
                       return null;
                     }
                   },
-                  decoration: inputdecoration,
+                  decoration: _inputdecoration(
+                      Theme.of(context).scaffoldBackgroundColor, ' name'),
                 ),
                 SizedBox(
-                  height: size.height * 0.015,
+                  height: size.height * 0.020,
                 ),
                 Textwidget(
                   text: 'Product category',
                   color: Colors.black,
                   istitle: true,
-                  fs: 15,
+                  fs: 16,
                 ),
                 SizedBox(
                   height: size.height * 0.01,
@@ -324,84 +345,21 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
                       return null;
                     }
                   },
-                  decoration: inputdecoration,
+                  decoration: _inputdecoration(
+                      Theme.of(context).scaffoldBackgroundColor, 'category'),
                 ),
                 SizedBox(
-                  height: size.height * 0.015,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Textwidget(
-                      text: 'Price',
-                      color: Colors.black,
-                      istitle: true,
-                      fs: 15,
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    TextFormField(
-                      controller: _productPrice,
-                      key: const ValueKey('Price'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter product Price';
-                        } else {
-                          return null;
-                        }
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: _scaffoldColor,
-                        border: InputBorder.none,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.transparent)),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.transparent)),
-                      ),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))
-                      ],
-                    )
-                  ],
+                  height: size.height * 0.020,
                 ),
                 SizedBox(
-                  height: size.height * 0.015,
-                ),
-                Textwidget(
-                  text: 'Product Details',
-                  color: Colors.black,
-                  istitle: true,
-                  fs: 15,
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
+                  height: size.height * 0.020,
                 ),
 
-                TextFormField(
-                  controller: _productdetails,
-                  key: const ValueKey('Enter Product details'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter product details';
-                    } else {
-                      return null;
-                    }
-                  },
-                  decoration: inputdecoration,
-                ),
-
-                SizedBox(
-                  height: size.height * 0.015,
-                ),
                 Textwidget(
                   text: 'Product Type',
                   color: Colors.black,
                   istitle: true,
-                  fs: 15,
+                  fs: 16,
                 ),
                 SizedBox(
                   height: size.height * 0.01,
@@ -417,41 +375,18 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
                       return null;
                     }
                   },
-                  decoration: inputdecoration,
+                  decoration: _inputdecoration(
+                      Theme.of(context).scaffoldBackgroundColor, ' type'),
                 ),
 
                 SizedBox(
-                  height: size.height * 0.015,
-                ),
-                Textwidget(
-                  text: 'Product Color',
-                  color: Colors.black,
-                  istitle: true,
-                  fs: 15,
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                TextFormField(
-                  controller: _productColor,
-                  key: const ValueKey('Color'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter product Color';
-                    } else {
-                      return null;
-                    }
-                  },
-                  decoration: inputdecoration,
-                ),
-                SizedBox(
-                  height: size.height * 0.015,
+                  height: size.height * 0.020,
                 ),
                 Textwidget(
                   text: 'Sub category name',
                   color: Colors.black,
                   istitle: true,
-                  fs: 15,
+                  fs: 16,
                 ),
                 SizedBox(
                   height: size.height * 0.01,
@@ -466,37 +401,240 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
                       return null;
                     }
                   },
-                  decoration: inputdecoration,
+                  decoration: _inputdecoration(
+                      Theme.of(context).scaffoldBackgroundColor,
+                      'sub category'),
                 ),
-
                 SizedBox(
-                  height: size.height * 0.015,
+                  height: size.height * 0.020,
                 ),
-                Textwidget(text: 'Product Rating', color: Colors.black),
-                _productRatingwidget(),
+                Textwidget(
+                  text: 'Quantity',
+                  color: Colors.black,
+                  istitle: true,
+                  fs: 16,
+                ),
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                SizedBox(
-                  height: size.height * 0.015,
+                TextFormField(
+                  controller: _productquantity,
+                  key: const ValueKey('quantity'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter sub quantity';
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: _inputdecoration(
+                      Theme.of(context).scaffoldBackgroundColor, 'quantity'),
                 ),
-                Textwidget(text: 'Product Size', color: Colors.black),
-                _productSizewidget(),
 
                 SizedBox(
-                  height: size.height * 0.015,
+                  height: size.height * 0.020,
                 ),
 
-                /////////////////////////////////////////////////////////////////
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Textwidget(
+                          text: 'Price',
+                          color: Colors.black,
+                          istitle: true,
+                          fs: 16,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Container(
+                          child: TextFormField(
+                            controller: _productPrice,
+                            key: const ValueKey('Price'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Enter product Price';
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: _scaffoldColor,
+                              hintText: ' price',
+                              border: InputBorder.none,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                            ),
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9.]'))
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Textwidget(
+                          text: ' Color',
+                          color: Colors.black,
+                          istitle: true,
+                          fs: 16,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Container(
+                          child: TextFormField(
+                            controller: _productColor,
+                            key: const ValueKey('Color'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Enter product Color';
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: _inputdecoration(
+                                Theme.of(context).scaffoldBackgroundColor,
+                                ' color'),
+                          ),
+                        )
+                      ],
+                    )),
+                  ],
+                ),
+
+                SizedBox(
+                  height: size.height * 0.020,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Textwidget(
+                          text: 'Product Rating',
+                          color: Colors.black,
+                          fs: 16,
+                          istitle: true,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        _productRatingwidget(),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Textwidget(
+                          text: 'Product unit',
+                          color: Colors.black,
+                          istitle: true,
+                          fs: 16,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Container(
+                          child: TextFormField(
+                            controller: _productunit,
+                            key: const ValueKey('Productunit'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return ' product unit';
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: _scaffoldColor,
+                              hintText: ' unit',
+                              border: InputBorder.none,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+                  ],
+                ),
+
+                SizedBox(
+                  height: size.height * 0.020,
+                ),
+
+                Textwidget(
+                  text: 'Product Details',
+                  color: Colors.black,
+                  istitle: true,
+                  fs: 16,
+                ),
+                SizedBox(
+                  height: size.height * 0.01,
+                ),
+
+                TextFormField(
+                  //minLines: 20,
+                  maxLines: 6,
+                  controller: _productdetails,
+                  keyboardType: TextInputType.multiline,
+                  key: const ValueKey('Enter Product details'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter product details';
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _scaffoldColor,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.transparent)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.transparent))),
+                ),
+
+                // ////////////////////////////////////////////////////////////////
 
                 SizedBox(
                   height: size.height * 0.025,
                 ),
-                Textwidget(text: 'Add varients', color: Colors.black),
-                SizedBox(
-                  height: size.height * 0.1,
-                ),
-
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -509,9 +647,12 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
                     },
                     child: Textwidget(
                       text: 'Add Product',
-                      color: Colors.black,
+                      color: Colors.white,
                       istitle: true,
                     )),
+                SizedBox(
+                  height: 15,
+                )
               ],
             ),
           ),
@@ -520,12 +661,30 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
     );
   }
 
+  InputDecoration _inputdecoration(Color _scaffoldColor, String text) {
+    return InputDecoration(
+        //  contentPadding: EdgeInsets.all(20),
+
+        filled: true,
+        fillColor: _scaffoldColor,
+        border: InputBorder.none,
+        hintText: text,
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.transparent)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.transparent)));
+  }
+
   String _rating = '5.0';
   Widget _productRatingwidget() {
     return Container(
-      //width: double.infinity,
+      width: 175,
       height: 60,
-      color: Theme.of(context).scaffoldBackgroundColor,
+      decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(10)),
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -560,48 +719,6 @@ class _AddproductWithApiState extends State<AddproductWithApi> {
           DropdownMenuItem(
             value: '1.0',
             child: Text('1.0'),
-          ),
-        ],
-      )),
-    );
-  }
-
-  String _productSize = 'M';
-  Widget _productSizewidget() {
-    return Container(
-      //width: double.infinity,
-      height: 60,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-        style: GoogleFonts.quicksand(color: Colors.black, fontSize: 15),
-        value: _productSize,
-        focusColor: Colors.red,
-        iconEnabledColor: Colors.grey,
-        onChanged: (value) {
-          setState(() {
-            _productSize = value!;
-          });
-        },
-        items: const [
-          DropdownMenuItem(
-            value: 'S',
-            child: Text('S'),
-          ),
-          DropdownMenuItem(
-            value: 'M',
-            child: Text('M'),
-          ),
-          DropdownMenuItem(
-            value: 'XL',
-            child: Text('XL'),
-          ),
-          DropdownMenuItem(
-            value: 'XXL',
-            child: Text('XXL'),
           ),
         ],
       )),

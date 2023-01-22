@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:marchentapp/fetch_screen.dart';
 import 'package:marchentapp/innerscreen/addproduct.dart';
 import 'package:marchentapp/innerscreen/addproductwithapi.dart';
+import 'package:marchentapp/provider/orderprovider.dart';
 import 'package:marchentapp/provider/productprovider.dart';
 import 'package:marchentapp/screen/auth/loginpage.dart';
 import 'package:marchentapp/screen/auth/register.dart';
@@ -16,6 +17,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((value) {
+    runApp(const MyApp());
+  });
 
   await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -24,7 +30,6 @@ void main() async {
           messagingSenderId: '875322725404',
           projectId: 'marchentapp-91955',
           authDomain: 'marchentapp-91955.firebaseapp.com'));
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +43,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ProductProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => OrderProvider(),
+        ),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

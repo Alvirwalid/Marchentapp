@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:marchentapp/model/cartmodel.dart';
+import 'package:marchentapp/model/ordermodel.dart';
 import 'package:marchentapp/model/productmodel.dart';
 
 class CustomeHttp {
@@ -42,5 +44,35 @@ class CustomeHttp {
       print(e.toString());
     }
     return productList;
+  }
+
+  Future<List<OrderModel>> fetchOrderData() async {
+    var link = 'http://jadurjini.vercel.app/order';
+
+    List<OrderModel> orderList = [];
+
+    try {
+      var respons =
+          await http.get(Uri.parse(link), headers: await getheaderWithToken());
+
+      //print('respons isss ${respons.body}');
+
+      var data = jsonDecode(respons.body);
+
+      OrderModel orderModel;
+
+      for (var i in data) {
+        orderModel = OrderModel.fromJson(i);
+
+        orderList.add(orderModel);
+      }
+
+      // print("${productList[0].price}");
+
+      return orderList;
+    } catch (e) {
+      print(e.toString());
+    }
+    return orderList;
   }
 }
